@@ -4,13 +4,16 @@ import { withStyles } from '@material-ui/core/styles';
 
 import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd';
 import Button from '@material-ui/core/Button';
-import { listItems } from './List'
+import ListItems from './List'
+import Header from '../../common/Header'
 
 const styles = theme => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center'
+    alignItems: 'stretch',
+    paddingLeft: theme.spacing.unit * 2,
+    paddingight: theme.spacing.unit * 2
   },
   header: {
     marginRight: 'auto'
@@ -23,9 +26,9 @@ class Templates extends Component {
 
     return (
       <div className={classes.root}>
-        <h2>ШАБЛОНЫ</h2>
-        {listItems}
-        <Button>
+        <Header>Шаблоны</Header>
+        <ListItems />
+        <Button style={{alignSelf: 'center'}}>
           <PlaylistAddIcon style={{fontSize: 50}} />
         </Button>
       </div>

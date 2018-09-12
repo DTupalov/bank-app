@@ -7,7 +7,7 @@ import { routerReducer } from 'react-router-redux';
 import * as reducers from './reducers';
 
 import './App.css';
-import RegistrationPage from './components/register/RegistrationPage';
+import Registration from './components/register';
 import HomePage from './components/home/HomePage';
 import Payments from './components/payments';
 import Money from './components/money';
@@ -20,6 +20,7 @@ import Autopayment from './components/payments/Autopayment';
 import QR from './components/payments/QR';
 import Partner from './components/money/partner';
 import Bank from './components/money/bank';
+import Gosuslugi from './components/payments/Gosuslugi';
 import QRSuccess from './components/payments/QRSuccess';
 
 const reducer = combineReducers({
@@ -39,6 +40,81 @@ const AppRoute = ({ component: Component, layout: Layout, ...rest }) => (
     )}
   />
 );
+
+//   const routes = [
+//     {
+//       path: "/login",
+//       component: Login,
+//     },
+//     {
+//       path: "/register",
+//       component: RegistrationPage,
+//     },
+//     {
+//       path: "/",
+//       component: Layout,
+//       routes: [
+//         {
+//           path: "/home",
+//           component: HomePage
+//         },
+//         {
+//           path: "/payments",
+//           component: Payments
+//         },
+//         {
+//           path: "/payments/templates",
+//           component: Templates
+//         },
+//         {
+//           path: "/payments/autopayment",
+//           component: Autopayment
+//         },
+//         {
+//           path: "/payments/QR",
+//           component: QR
+//         },
+//         {
+//           path: "/payments/Gosuslugi",
+//           component: Gosuslugi
+//         },
+//         {
+//           path: "/money",
+//           component: Money
+//         },
+//         {
+//           path: "/money/partner",
+//           component: Partner
+//         },
+//         {
+//           path: "/money/bank",
+//           component: Bank
+//         },
+//         {
+//           path: "/transfer",
+//           component: Transfer
+//         },
+//         {
+//           path: "/history",
+//           component: HistoryPage
+//         },
+//         {
+//           path: "/feedback",
+//           component: Feedback
+//         }
+//       ]
+//     }
+//   ]
+
+//  export const RouteWithSubRoutes = route => (
+//     <Route
+//       path={route.path}
+//       render={props => (
+//         // pass the sub-routes down to keep nesting
+//         <route.component {...props} routes={route.routes} />
+//       )}
+//     />
+//   );
 
 class App extends Component {
   render() {
@@ -61,11 +137,10 @@ class App extends Component {
               path="/QR/success"
               component={QRSuccess}
             />
-
             <AppRoute layout={Layout} path="/money" component={Money} />
             <AppRoute layout={Layout} path="/partner" component={Partner} />
             <AppRoute layout={Layout} path="/bank" component={Bank} />
-
+            <AppRoute layout={Layout} path="/gosuslugi" component={Gosuslugi} />
             <AppRoute layout={Layout} path="/feedback" component={Feedback} />
             <AppRoute layout={Layout} path="/history" component={HistoryPage} />
             <AppRoute layout={Layout} path="/transfer" component={Transfer} />

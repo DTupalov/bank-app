@@ -1,96 +1,119 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
+import React, { Component } from 'react';
+import {
+    MessageList,
+    Input,
+    Button
+} from 'react-chat-elements';
+import { withStyles } from '@material-ui/core/styles'
+import 'react-chat-elements/dist/main.css';
 
+const moment = require('moment');
 
 const styles = theme => ({
-  root: {
-    display: 'flex',
-    justifyContent: 'center'
-    // flexWrap: 'wrap',
-  },
-  formControl: {
-    margin: theme.spacing.unit,
-    minWidth: 240,
-  },
-  selectEmpty: {
-    marginTop: theme.spacing.unit * 2,
-  },
-  textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-    width: 240,
-  },
-  menu: {
-    width: 240,
-  },
-});
+	container : {
+		display: 'flex',
+		flexDirection: 'row',
+		overflow: 'auto',
+		position: 'absolute',
+		top: '0',
+		bottom: '60px',
+		left: '0',
+		right: '0',
+	},
+		
+	rightPanel : {
+		flex: 1,
+		display: 'flex',
+		flexDirection: 'column',
+	},
+	
+	messageList : {
+		flex: 1,
+		minWidth: '140px',
+	}
+})
 
-class SimpleSelect extends React.Component {
-  state = {
-    age: '',
-    name: 'hai',
-    sum: 0
-  };
+export class App extends Component {
 
+    constructor(props) {
+        super(props);
 
-  handleChange = event => {
-    this.setState({ [event.target.name]: event.target.value });
-  };
+        this.state = {
+            show: true,
+            messageList: [],
+        };
+    }  
 
+    createMessage(message) {
+        let type = 'text';
+        let status = 'read';
+                
+        return {
+            position: 'right',
+            forwarded: true,
+            type: type,
+            theme: 'white',
+            view: 'list',
+            title: null,
+            text: message,
+            status: status,
+            date: new Date(),
+            dateString: moment(new Date()).format('HH:mm'),
+        };
+            
+    }
 
-  handleChange2 = name => event => {
-    this.setState({
-      [name]: event.target.value,
-    });
-  };
+    addMessage = () => {
+        let message = this.refs.input.state.value
+        if (message) {
+            var list = this.state.messageList;
+        list.push(this.createMessage(message))
+        this.refs.input.state.value = ''
+        this.setState({
+            messageList: list,
+        });
+        } 
+    }
 
-  render() {
-    const { classes } = this.props;
+    render() {
+        
+		const { classes } = this.props
+        return (
+            <div className={classes.container}>
+                <div
+                    className={classes.rightPanel}>
+                    <MessageList
+                        className={classes.messageList}
+                        lockable={true}
+                        downButtonBadge={10}
+                        dataSource={this.state.messageList} />
 
-    return (
-      <form className={classes.root} autoComplete="off">
-        <FormControl className={classes.formControl}>
-          <InputLabel htmlFor="partnerId">Выберите причину</InputLabel>
-          <Select
-            value={this.state.age}
-            onChange={this.handleChange}
-            inputProps={{
-              name: 'age',
-              id: 'age-simple',
-            }}
-          >
-            <MenuItem value={10}>Жалоба</MenuItem>
-            <MenuItem value={20}>Благодарность</MenuItem>
-            <MenuItem value={30}>Предложение</MenuItem>
-          </Select>
-          <TextField
-          id="multiline-flexible"
-          label="Описание"
-          multiline
-          rowsMax="4"
-          value={this.state.multiline}
-          onChange={this.handleChange2('multiline')}
-          className={classes.textField}
-          margin="normal"
-        />
-        <Button variant="contained" color="primary" className={classes.button}>
-        Подтвердить
-      </Button>
-        </FormControl>
-      </form>
-    );
-  }
+                    <Input
+                        placeholder="Введите сообщение"
+                        defaultValue=""
+                        ref='input'
+                        multiline={true}
+                        // buttonsFloat='left'
+                        onKeyPress={(e) => {
+                            if (e.shiftKey && e.charCode === 13) {
+                                return true;
+                            }
+                            if (e.charCode === 13) {
+                                this.refs.input.clear();
+                                this.addMessage();
+                                e.preventDefault();
+                                return false;
+                            }
+                        }}
+                        rightButtons={
+                            <Button
+                                text='Отправить'
+                                onClick={this.addMessage} />
+                        } />
+                </div>
+            </div>
+        );
+    }
 }
 
-SimpleSelect.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
-
-export default withStyles(styles)(SimpleSelect);
+export default withStyles(styles)(App);

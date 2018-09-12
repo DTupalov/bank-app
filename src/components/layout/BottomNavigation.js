@@ -30,7 +30,6 @@ class HomeBottomNavigation extends Component {
 
   render() {
     const { classes } = this.props;
-    const { value } = this.state;
 
     return (
       <BottomNavigation
@@ -44,7 +43,7 @@ class HomeBottomNavigation extends Component {
         <BottomNavigationAction label="Переводы" icon={<LocalParkingIcon />} value='/transfer' />
         <BottomNavigationAction label="Наличные" icon={<MoneyIcon />} value='/money' />
         <BottomNavigationAction label="История" icon={<AssignmentIcon />} value='/history' />
-        <BottomNavigationAction label="Обратная связь" icon={<FeedbackIcon />} value='/feedback' />
+        <BottomNavigationAction label="Чат" icon={<FeedbackIcon />} value='/feedback' />
       </BottomNavigation>
     );
   }
