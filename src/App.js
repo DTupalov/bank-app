@@ -122,7 +122,7 @@ class App extends Component {
       <Provider store={store}>
         <Router>
           <div>
-            <Route exact path="/" component={RegistrationPage} />
+            <Route exact path="/" component={Registration} />
             <AppRoute layout={Layout} path="/home" component={HomePage} />
             <AppRoute layout={Layout} path="/payments" component={Payments} />
             <AppRoute layout={Layout} path="/templates" component={Templates} />
